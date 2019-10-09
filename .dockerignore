@@ -1,0 +1,16 @@
+/.git
+/_build
+/deps
+
+docker-compose*.yml
+schema.graphql
+Dockerfile*
+Makefile*
+LICENSE*
+README*
+
+.formatter.exs
+.graphqlconfig
+.dockerignore
+.travis.yml
+.gitignore

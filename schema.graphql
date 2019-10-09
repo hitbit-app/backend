@@ -1,0 +1,121 @@
+# source: http://localhost:4000
+# timestamp: Wed Oct 09 2019 15:11:07 GMT+0200 (GMT+02:00)
+
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+type Comment {
+  author: User
+  id: UUID!
+  replies: [Reply]
+  text: String!
+  userVote: Vote
+  votes: UpDownVotes
+}
+
+type Post {
+  answer: Comment
+  audioUrl: String!
+  author: User
+  comments: [Comment]
+  id: UUID!
+  insertedAt: String!
+  userVote: Vote
+  votes: UpDownVotes
+}
+
+type Reply {
+  author: User
+  id: UUID!
+  text: String!
+  userVote: Vote
+  votes: UpDownVotes
+}
+
+type RootMutationType {
+  """[User] Labels a comment as answer"""
+  acceptAnswer(commentId: UUID!): Boolean
+
+  """[User] Edits a post"""
+  editPost(audioUrl: String, id: UUID!): Boolean
+
+  """[User] Creates new comment"""
+  insertComment(postId: UUID!, text: String!): UUID
+
+  """[User] Creates new post"""
+  insertPost(audioUrl: String!): UUID
+
+  """[User] Creates new comment to comment"""
+  insertReply(commentId: UUID!, text: String!): UUID
+
+  """[Public] Gives a token for bearer authentication"""
+  login(email: String!, password: String!): String
+
+  """[User] Removes a post"""
+  removePost(id: UUID!): Boolean
+
+  """[Public] Creates new user"""
+  signUp(email: String!, password: String!, username: String!): UUID
+
+  """[User] Upvote/downvote or remove vote from a comment"""
+  voteComment(commentId: UUID!, mode: VoteMode!): Boolean
+
+  """[User] Upvote/downvote or remove vote from a post"""
+  votePost(mode: VoteMode!, postId: UUID!): Boolean
+}
+
+type RootQueryType {
+  """[Public] UUID to comment"""
+  comment(id: UUID!): Comment
+
+  """[Public] Latest inserted posts (not just current user's)"""
+  latestPosts(limit: Int = 15): [Post]
+
+  """[Public] UUID to post"""
+  post(id: UUID!): Post
+
+  """[Admin] The given key is a substring of username or email"""
+  searchUsers(key: String!): [User]
+
+  """[User] Gives back the authenticated user"""
+  userInfo: User
+}
+
+"""How many upvotes and downvotes has an item"""
+type UpDownVotes {
+  down: Int
+  up: Int
+}
+
+type User {
+  avatarUrl: String!
+  earPoints: Int!
+  email: String!
+  id: UUID!
+  posts: [Post]
+  username: String!
+  voicePoints: Int!
+}
+
+"""
+String representation as specified in RFC 4122.
+
+E.g.: "f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
+
+"""
+scalar UUID
+
+"""A vote can be an upvote (UP) or a downvote (DOWN)"""
+enum Vote {
+  DOWN
+  UP
+}
+
+"""Vote mode: upvote, downvote or remove a vote from an item"""
+enum VoteMode {
+  DOWN
+  REMOVE
+  UP
+}

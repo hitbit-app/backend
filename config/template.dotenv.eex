@@ -1,0 +1,7 @@
+SECRET_KEY_BASE=<%= secret_key_base %>
+GUARDIAN_SECRET_KEY=<%= guardian_secret_key %>
+DB_NAME=<%= db_name %>
+DB_USER=<%= db_user %>
+DB_PASS=<%= db_pass %>
+DB_HOST=<%= db_host %>
+DB_PORT=<%= db_port %>

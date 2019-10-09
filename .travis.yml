@@ -1,0 +1,16 @@
+language: minimal
+
+services:
+  - docker
+
+script:
+  - make travis-test
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+deploy:
+  provider: script
+  script: docker push emilianobovetti/hitbit:test
+  on:
+    branch: master

@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "hitbit": {
+      "schemaPath": "schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "dev": "http://localhost:4000"
+        }
+      }
+    }
+  }
+}

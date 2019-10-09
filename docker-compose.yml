@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  phoenix-app:
+    image: emilianobovetti/hitbit:base
+    ports:
+      - 4000:4000
+    depends_on:
+      - postgres-db
+    environment:
+      DB_NAME: pgsql
+      DB_USER: pgsql
+      DB_PASS: pgsql
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+
+  postgres-db:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: pgsql
+      POSTGRES_USER: pgsql
+      POSTGRES_PASSWORD: pgsql
+      POSTGRES_HOST: postgres-db
+      POSTGRES_PORT: 5432

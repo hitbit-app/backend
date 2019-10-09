@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  phoenix-app:
+    image: emilianobovetti/hitbit:test
+
+  postgres-db:
+    tmpfs: /var/lib/postgresql/data

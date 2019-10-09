@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<form id="login-form">
+  <div>
+    <label for="email">Email:</label>
+    <input type="text" id="login-email" name="email">
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="login-password" name="password">
+  </div>
+
+  <div>
+    <button type="submit">Login</button>
+  </div>
+</form>
+
+<script>
+if (window === window.top) {
+  throw new Error('Session container must run in a iframe');
+}
+
+const gqlEndpoint = '<%= gql_endpoint %>';
+
+const login = {
+  email: document.getElementById('login-email'),
+
+  password: document.getElementById('login-password'),
+
+  form: document.getElementById('login-form'),
+};
+
+const parentCtr = {
+  origin: '<%= frontend_origin %>',
+
+  window: window.parent,
+
+  send: data => parentCtr.window.postMessage(data, parentCtr.origin),
+};
+
+let token;
+
+const handleFetch = data => {
+  const xhr = new XMLHttpRequest();
+  const { resource, init = {} } = data;
+
+  xhr.open(init.method || 'GET', resource, true);
+
+  xhr.addEventListener('load', event => {
+    const xhr = event.target;
+
+    const responseHeaders = [];
+
+    xhr.getAllResponseHeaders().split('\r\n').forEach(header => {
+      if (header === '') {
+        return;
+      }
+
+      const split = header.split(':');
+      const key = split.shift().toLowerCase();
+      const value = split.join(':').replace(/^\s*/, '');
+
+      responseHeaders.push([ key, value ]);
+    });
+
+    const request = {
+      status: xhr.status,
+      statusText: xhr.statusText,
+      response: xhr.response,
+      responseURL: xhr.responseURL,
+      responseText: xhr.responseText,
+      responseHeaders,
+    };
+
+    parentCtr.send({
+      msg: data.msg,
+      id: data.id,
+      state: 'ok',
+      request,
+    });
+  });
+
+  xhr.addEventListener('error', event => {
+    parentCtr.send({
+      msg: data.msg,
+      id: data.id,
+      state: 'err',
+    });
+  });
+
+  Object.keys(init.headers || {}).forEach(key =>
+    xhr.setRequestHeader(key, init.headers[key])
+  );
+
+  if (typeof token === 'string') {
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+  }
+
+  xhr.send(init.body || null);
+};
+
+const onMessage = event => {
+  if (event.origin !== parentCtr.origin) {
+    throw new Error(`Unknown origin: ${event.origin}`);
+  }
+
+  const { data } = event;
+
+  switch (data.msg) {
+    case 'fetch':
+      handleFetch(data);
+      break;
+
+    default:
+      console.error('Unknown message:', data.msg);
+      break;
+  }
+};
+
+const onAuth = data => {
+  if (typeof data.login === 'string') {
+    token = data.login;
+    localStorage.setItem('token', token);
+    parentCtr.send({ msg: 'auth', state: 'ok' });
+  } else {
+    token = undefined;
+    localStorage.removeItem('token');
+    parentCtr.send({ msg: 'auth', state: 'err' });
+  }
+};
+
+const onSubmit = event => {
+  event.preventDefault();
+
+  const email = login.email.value;
+  const password = login.password.value;
+
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('POST', gqlEndpoint, true);
+
+  xhr.addEventListener('loadend', event => {
+    try {
+      onAuth(JSON.parse(event.target.responseText).data);
+    } catch (err) {
+      onAuth({});
+    }
+  });
+
+  xhr.send(`
+    mutation {
+      login(
+        email: ${JSON.stringify(email)},
+        password: ${JSON.stringify(password)}
+      )
+    }
+  `);
+};
+
+onAuth({ login: localStorage.getItem('token') });
+
+login.form.addEventListener('submit', onSubmit, false);
+window.addEventListener('message', onMessage, false);
+
+parentCtr.send({ msg: 'ready' });
+</script>
+
+</body>
+</html>

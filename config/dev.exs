@@ -35,8 +35,7 @@ config :hitbit, HitBit.Repo,
 config :hitbit, HitBit.Guardian, secret_key: HitBit.Utils.Rand.string()
 
 # Session controller configuration
-config :hitbit, HitBitWeb.SessionController,
-  frontend_origin: "http://localhost"
+config :hitbit, HitBitWeb.SessionController, frontend_origin: "http://localhost"
 
 # ## SSL Support
 #

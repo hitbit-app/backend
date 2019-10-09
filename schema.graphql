@@ -1,5 +1,5 @@
 # source: http://localhost:4000
-# timestamp: Wed Oct 09 2019 15:11:07 GMT+0200 (GMT+02:00)
+# timestamp: Wed Oct 09 2019 18:28:08 GMT+0200 (GMT+02:00)
 
 schema {
   query: RootQueryType
@@ -35,51 +35,54 @@ type Reply {
 }
 
 type RootMutationType {
-  """[User] Labels a comment as answer"""
+  """user: Labels a comment as answer"""
   acceptAnswer(commentId: UUID!): Boolean
 
-  """[User] Edits a post"""
+  """user: Edits a post"""
   editPost(audioUrl: String, id: UUID!): Boolean
 
-  """[User] Creates new comment"""
+  """user: Edits user info"""
+  editUser(avatarUrl: String, email: String, username: String): Boolean
+
+  """user: Creates new comment"""
   insertComment(postId: UUID!, text: String!): UUID
 
-  """[User] Creates new post"""
+  """user: Creates new post"""
   insertPost(audioUrl: String!): UUID
 
-  """[User] Creates new comment to comment"""
+  """user: Creates new comment to comment"""
   insertReply(commentId: UUID!, text: String!): UUID
 
-  """[Public] Gives a token for bearer authentication"""
+  """public: Gives a token for bearer authentication"""
   login(email: String!, password: String!): String
 
-  """[User] Removes a post"""
+  """user: Removes a post"""
   removePost(id: UUID!): Boolean
 
-  """[Public] Creates new user"""
+  """public: Creates new user"""
   signUp(email: String!, password: String!, username: String!): UUID
 
-  """[User] Upvote/downvote or remove vote from a comment"""
+  """user: Upvote/downvote or remove vote from a comment"""
   voteComment(commentId: UUID!, mode: VoteMode!): Boolean
 
-  """[User] Upvote/downvote or remove vote from a post"""
+  """user: Upvote/downvote or remove vote from a post"""
   votePost(mode: VoteMode!, postId: UUID!): Boolean
 }
 
 type RootQueryType {
-  """[Public] UUID to comment"""
+  """public: UUID to comment"""
   comment(id: UUID!): Comment
 
-  """[Public] Latest inserted posts (not just current user's)"""
+  """public: Latest inserted posts (not just current user's)"""
   latestPosts(limit: Int = 15): [Post]
 
-  """[Public] UUID to post"""
+  """public: UUID to post"""
   post(id: UUID!): Post
 
-  """[Admin] The given key is a substring of username or email"""
+  """admin: The given key is a substring of username or email"""
   searchUsers(key: String!): [User]
 
-  """[User] Gives back the authenticated user"""
+  """user: Gives back the authenticated user"""
   userInfo: User
 }
 
@@ -90,7 +93,7 @@ type UpDownVotes {
 }
 
 type User {
-  avatarUrl: String!
+  avatarUrl: String
   earPoints: Int!
   email: String!
   id: UUID!

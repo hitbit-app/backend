@@ -55,7 +55,7 @@ defmodule GraphQL.Schema do
   end
 
   mutation do
-    @desc "[Public] Creates new user"
+    @desc "public: Creates new user"
     field :sign_up, :uuid do
       arg(:username, type: non_null(:string))
       arg(:email, type: non_null(:string))
@@ -64,7 +64,7 @@ defmodule GraphQL.Schema do
       resolve(&Resolvers.Public.sign_up/2)
     end
 
-    @desc "[Public] Gives a token for bearer authentication"
+    @desc "public: Gives a token for bearer authentication"
     field :login, :string do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
@@ -72,14 +72,23 @@ defmodule GraphQL.Schema do
       resolve(&Resolvers.Public.authenticate/2)
     end
 
-    @desc "[User] Creates new post"
+    @desc "user: Edits user info"
+    field :edit_user, :boolean do
+      arg(:username, type: :string)
+      arg(:email, type: :string)
+      arg(:avatar_url, type: :string)
+
+      resolve(&Resolvers.User.edit_user/2)
+    end
+
+    @desc "user: Creates new post"
     field :insert_post, :uuid do
       arg(:audio_url, non_null(:string))
 
       resolve(&Resolvers.User.insert_post/2)
     end
 
-    @desc "[User] Edits a post"
+    @desc "user: Edits a post"
     field :edit_post, :boolean do
       arg(:id, non_null(:uuid))
       arg(:audio_url, :string)
@@ -87,14 +96,14 @@ defmodule GraphQL.Schema do
       resolve(&Resolvers.User.edit_post/2)
     end
 
-    @desc "[User] Removes a post"
+    @desc "user: Removes a post"
     field :remove_post, :boolean do
       arg(:id, non_null(:uuid))
 
       resolve(&Resolvers.User.remove_post/2)
     end
 
-    @desc "[User] Creates new comment"
+    @desc "user: Creates new comment"
     field :insert_comment, :uuid do
       arg(:text, non_null(:string))
       arg(:post_id, non_null(:uuid))
@@ -102,7 +111,7 @@ defmodule GraphQL.Schema do
       resolve(&Resolvers.User.insert_comment/2)
     end
 
-    @desc "[User] Creates new comment to comment"
+    @desc "user: Creates new comment to comment"
     field :insert_reply, :uuid do
       arg(:text, non_null(:string))
       arg(:comment_id, non_null(:uuid))
@@ -110,14 +119,14 @@ defmodule GraphQL.Schema do
       resolve(&Resolvers.User.insert_reply/2)
     end
 
-    @desc "[User] Labels a comment as answer"
+    @desc "user: Labels a comment as answer"
     field :accept_answer, :boolean do
       arg(:comment_id, non_null(:uuid))
 
       resolve(&Resolvers.User.accept_answer/2)
     end
 
-    @desc "[User] Upvote/downvote or remove vote from a post"
+    @desc "user: Upvote/downvote or remove vote from a post"
     field :vote_post, :boolean do
       arg(:mode, non_null(:vote_mode))
       arg(:post_id, non_null(:uuid))
@@ -125,7 +134,7 @@ defmodule GraphQL.Schema do
       resolve(&Resolvers.User.vote_post/2)
     end
 
-    @desc "[User] Upvote/downvote or remove vote from a comment"
+    @desc "user: Upvote/downvote or remove vote from a comment"
     field :vote_comment, :boolean do
       arg(:mode, non_null(:vote_mode))
       arg(:comment_id, non_null(:uuid))
@@ -135,33 +144,33 @@ defmodule GraphQL.Schema do
   end
 
   query do
-    @desc "[Public] UUID to post"
+    @desc "public: UUID to post"
     field :post, :post do
       arg(:id, type: non_null(:uuid))
 
       resolve(public_id_resolver(Post))
     end
 
-    @desc "[Public] UUID to comment"
+    @desc "public: UUID to comment"
     field :comment, :comment do
       arg(:id, type: non_null(:uuid))
 
       resolve(public_id_resolver(Comment))
     end
 
-    @desc "[Public] Latest inserted posts (not just current user's)"
+    @desc "public: Latest inserted posts (not just current user's)"
     field :latest_posts, list_of(:post) do
       arg(:limit, type: :integer, default_value: 15)
 
       resolve(&Resolvers.Public.latest_posts/2)
     end
 
-    @desc "[User] Gives back the authenticated user"
+    @desc "user: Gives back the authenticated user"
     field :user_info, :user do
       resolve(&Resolvers.User.get_user_info/2)
     end
 
-    @desc "[Admin] The given key is a substring of username or email"
+    @desc "admin: The given key is a substring of username or email"
     field :search_users, list_of(:user) do
       arg(:key, type: non_null(:string))
 

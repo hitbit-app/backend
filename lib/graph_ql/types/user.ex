@@ -9,7 +9,7 @@ defmodule GraphQL.Types.User do
     field :id, non_null(:uuid)
     field :username, non_null(:string)
     field :email, non_null(:string)
-    field :avatar_url, non_null(:string)
+    field :avatar_url, :string
     field :ear_points, non_null(:integer)
     field :voice_points, non_null(:integer)
 

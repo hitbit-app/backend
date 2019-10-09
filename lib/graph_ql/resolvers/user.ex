@@ -16,6 +16,24 @@ defmodule GraphQL.Resolvers.User do
     end
   end
 
+  defp do_edit_user(data, user_id) do
+    User
+    |> Repo.get!(user_id)
+    |> User.changeset(data)
+    |> Repo.update()
+    |> Helper.bool_resolver()
+  end
+
+  defauth edit_user(data, %{context: ctx}) do
+    try do
+      fn -> do_edit_user(data, ctx.user_id) end
+      |> Repo.transaction()
+      |> Helper.transaction_resolver()
+    rescue
+      _ in Ecto.NoResultsError -> {:error, :no_such_user}
+    end
+  end
+
   defauth insert_post(data, %{context: ctx}) do
     try do
       %Post{author_user_id: ctx.user_id}

@@ -35,6 +35,18 @@ defmodule GraphQL.Resolvers.User do
   end
 
   defauth insert_post(data, %{context: ctx}) do
+    # TODO: upload size limit
+    # TODO: audio validation
+
+    # IO.inspect(data)
+    # %{
+    #   audio_file: %Plug.Upload{
+    #     content_type: "application/octet-stream",
+    #     filename: "<filename>",
+    #     path: "/tmp/plug-1570/multipart-1570699493-939398894133130-3"
+    #   }
+    # }
+
     try do
       %Post{author_user_id: ctx.user_id}
       |> Post.changeset(%{audio_url: data.audio_url})

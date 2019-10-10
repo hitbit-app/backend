@@ -8,6 +8,7 @@ defmodule GraphQL.Schema do
   import_types(GraphQL.Types.User)
   import_types(GraphQL.Types.Post)
   import_types(GraphQL.Types.Comment)
+  import_types(Absinthe.Plug.Types)
 
   def context(ctx) do
     loader =
@@ -83,7 +84,7 @@ defmodule GraphQL.Schema do
 
     @desc "user: Creates new post"
     field :insert_post, :uuid do
-      arg(:audio_url, non_null(:string))
+      arg(:audio_file, non_null(:upload))
 
       resolve(&Resolvers.User.insert_post/2)
     end

@@ -1,9 +1,9 @@
-defmodule HitBit.Schemas.Comment do
+defmodule Hitbit.Schemas.Comment do
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias HitBit.Schemas.{User, Post, CommentVote}
+  alias Hitbit.Schemas.{User, Post, CommentVote}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -27,7 +27,7 @@ defmodule HitBit.Schemas.Comment do
   end
 
   def data do
-    Dataloader.Ecto.new(HitBit.Repo, query: &query/2)
+    Dataloader.Ecto.new(Hitbit.Repo, query: &query/2)
   end
 
   def query(queryable, _params) do

@@ -1,4 +1,4 @@
-defmodule HitBit.Cache do
+defmodule Hitbit.Cache do
   use GenServer
 
   @type table :: atom

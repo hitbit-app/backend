@@ -1,4 +1,4 @@
-defmodule HitBitWeb.ChannelCase do
+defmodule HitbitWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule HitBitWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint HitBitWeb.Endpoint
+      @endpoint HitbitWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(HitBit.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Hitbit.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(HitBit.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Hitbit.Repo, {:shared, self()})
     end
 
     :ok

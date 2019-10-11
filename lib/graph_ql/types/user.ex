@@ -3,7 +3,7 @@ defmodule GraphQL.Types.User do
 
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
-  alias HitBit.Schemas.Post
+  alias Hitbit.Schemas.Post
 
   object :user do
     field :id, non_null(:uuid)

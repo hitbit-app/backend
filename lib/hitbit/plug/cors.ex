@@ -1,4 +1,4 @@
-defmodule HitBit.Plug.CORS do
+defmodule Hitbit.Plug.CORS do
   @behaviour Plug
 
   import Plug.Conn

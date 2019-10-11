@@ -2,9 +2,9 @@
 #
 #   mix run priv/repo/faker.exs
 
-import HitBit.Repo, only: [insert!: 1, insert_all: 2]
+import Hitbit.Repo, only: [insert!: 1, insert_all: 2]
 
-alias HitBit.Schemas.{User, Post, Comment, PostVote, CommentVote}
+alias Hitbit.Schemas.{User, Post, Comment, PostVote, CommentVote}
 
 require Logger
 
@@ -16,7 +16,7 @@ replies_per_comment = 3
 post_votes_per_user = 100
 comment_votes_per_user = 100
 
-users_in_db = HitBit.Repo.aggregate(User, :count, :id)
+users_in_db = Hitbit.Repo.aggregate(User, :count, :id)
 
 if users_in_db >= users do
   Logger.info("Database seems alredy seeded with #{users_in_db} users")

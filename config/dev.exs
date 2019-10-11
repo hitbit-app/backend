@@ -8,22 +8,22 @@ Code.require_file("rand.ex", "lib/hitbit/utils")
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :hitbit, HitBitWeb.Endpoint,
-  secret_key_base: HitBit.Utils.Rand.string(),
+config :hitbit, HitbitWeb.Endpoint,
+  secret_key_base: Hitbit.Utils.Rand.string(),
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
   watchers: []
 
-config :hitbit, HitBit.Plug.CORS,
+config :hitbit, Hitbit.Plug.CORS,
   origins: "*",
   methods: ["POST"]
 
 # Expose graphiql route in development
-config :hitbit, HitBitWeb.Router, graphiql: true
+config :hitbit, HitbitWeb.Router, graphiql: true
 
 # Database configuration
-config :hitbit, HitBit.Repo,
+config :hitbit, Hitbit.Repo,
   database: System.get_env("DB_NAME", "postgres"),
   username: System.get_env("DB_USER", "postgres"),
   password: System.get_env("DB_PASS", "postgres"),
@@ -32,10 +32,10 @@ config :hitbit, HitBit.Repo,
   pool_size: 15
 
 # Guardian configuration
-config :hitbit, HitBit.Guardian, secret_key: HitBit.Utils.Rand.string()
+config :hitbit, Hitbit.Guardian, secret_key: Hitbit.Utils.Rand.string()
 
 # Session controller configuration
-config :hitbit, HitBitWeb.SessionController, frontend_origin: "http://localhost"
+config :hitbit, HitbitWeb.SessionController, frontend_origin: "http://localhost"
 
 # ## SSL Support
 #
@@ -62,7 +62,7 @@ config :hitbit, HitBitWeb.SessionController, frontend_origin: "http://localhost"
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :hitbit, HitBitWeb.Endpoint,
+config :hitbit, HitbitWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},

@@ -1,4 +1,4 @@
-defmodule HitBit.Utils.Input do
+defmodule Hitbit.Utils.Input do
   def escape(str) do
     Jason.encode!(str)
   end

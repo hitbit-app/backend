@@ -1,4 +1,4 @@
-defmodule HitBit.Utils.Release do
+defmodule Hitbit.Utils.Release do
   @app :hitbit
 
   def migrate do

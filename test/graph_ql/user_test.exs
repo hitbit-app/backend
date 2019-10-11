@@ -1,5 +1,5 @@
 defmodule GraphQL.UserTest do
-  use HitBitWeb.ConnCase
+  use HitbitWeb.ConnCase
 
   describe "user info" do
     setup _context do

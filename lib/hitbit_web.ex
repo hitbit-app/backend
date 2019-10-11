@@ -1,12 +1,12 @@
-defmodule HitBitWeb do
+defmodule HitbitWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use HitBitWeb, :controller
-      use HitBitWeb, :view
+      use HitbitWeb, :controller
+      use HitbitWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,11 +19,11 @@ defmodule HitBitWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: HitBitWeb
+      use Phoenix.Controller, namespace: HitbitWeb
 
       import Plug.Conn
-      import HitBitWeb.Gettext
-      alias HitBitWeb.Router.Helpers, as: Routes
+      import HitbitWeb.Gettext
+      alias HitbitWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -38,7 +38,7 @@ defmodule HitBitWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import HitBitWeb.Gettext
+      import HitbitWeb.Gettext
     end
   end
 
@@ -46,10 +46,10 @@ defmodule HitBitWeb do
     quote do
       use Phoenix.View,
         root: "lib/hitbit_web/templates",
-        namespace: HitBitWeb
+        namespace: HitbitWeb
 
-      import HitBitWeb.Gettext
-      alias HitBitWeb.Router.Helpers, as: Routes
+      import HitbitWeb.Gettext
+      alias HitbitWeb.Router.Helpers, as: Routes
     end
   end
 

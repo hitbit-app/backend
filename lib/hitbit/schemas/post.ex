@@ -1,15 +1,15 @@
-defmodule HitBit.Schemas.Post do
+defmodule Hitbit.Schemas.Post do
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias HitBit.Schemas.{User, Comment, PostVote}
+  alias Hitbit.Schemas.{User, Comment, PostVote}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
 
   schema "posts" do
-    field :audio_url, HitBit.Ecto.URL
+    field :audio_url, Hitbit.Ecto.URL
 
     belongs_to :author, User, foreign_key: :author_user_id
     has_many :comments, Comment, foreign_key: :post_id
@@ -24,7 +24,7 @@ defmodule HitBit.Schemas.Post do
   end
 
   def data do
-    Dataloader.Ecto.new(HitBit.Repo, query: &query/2)
+    Dataloader.Ecto.new(Hitbit.Repo, query: &query/2)
   end
 
   def query(queryable, _params) do

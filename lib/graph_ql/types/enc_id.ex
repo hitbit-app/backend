@@ -2,7 +2,7 @@ defmodule GraphQL.Types.EncId do
   use Absinthe.Schema.Notation
 
   defp secret_key(len \\ 32) do
-    Application.get_env(:hitbit, HitBitWeb.Endpoint)
+    Application.get_env(:hitbit, HitbitWeb.Endpoint)
     |> Keyword.get(:secret_key_base, "")
     |> String.slice(0, len)
   end

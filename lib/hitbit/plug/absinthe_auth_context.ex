@@ -1,4 +1,4 @@
-defmodule HitBit.Plug.AbsintheAuthContext do
+defmodule Hitbit.Plug.AbsintheAuthContext do
   @behaviour Plug
 
   import Plug.Conn
@@ -13,7 +13,7 @@ defmodule HitBit.Plug.AbsintheAuthContext do
 
   def build_context(conn) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-         {:ok, sub} <- HitBit.Guardian.subject_from_token(token) do
+         {:ok, sub} <- Hitbit.Guardian.subject_from_token(token) do
       %{user_id: sub.id, user_groups: sub.groups}
     else
       _ -> %{}

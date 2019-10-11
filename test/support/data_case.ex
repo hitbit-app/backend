@@ -1,4 +1,4 @@
-defmodule HitBit.DataCase do
+defmodule Hitbit.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule HitBit.DataCase do
 
   using do
     quote do
-      alias HitBit.Repo
+      alias Hitbit.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import HitBit.DataCase
+      import Hitbit.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(HitBit.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Hitbit.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(HitBit.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Hitbit.Repo, {:shared, self()})
     end
 
     :ok

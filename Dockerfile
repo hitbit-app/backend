@@ -56,5 +56,5 @@ COPY --from=build "/opt/build/_build/${MIX_ENV}/rel/${APP_NAME}/" ./
 
 ENV APP_NAME="${APP_NAME}"
 CMD \
-    "bin/${APP_NAME}" eval "HitBit.Utils.Release.migrate" \
+    "bin/${APP_NAME}" eval "Hitbit.Utils.Release.migrate" \
     && "bin/${APP_NAME}" start

@@ -1,8 +1,8 @@
 defmodule GraphQL.PublicTest do
-  use HitBitWeb.ConnCase
+  use HitbitWeb.ConnCase
 
-  alias HitBit.Repo
-  alias HitBit.Schemas.Post
+  alias Hitbit.Repo
+  alias Hitbit.Schemas.Post
 
   defp sign_up_query(data) do
     """

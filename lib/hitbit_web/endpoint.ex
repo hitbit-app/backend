@@ -1,7 +1,7 @@
-defmodule HitBitWeb.Endpoint do
+defmodule HitbitWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :hitbit
 
-  socket "/socket", HitBitWeb.UserSocket,
+  socket "/socket", HitbitWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -32,8 +32,8 @@ defmodule HitBitWeb.Endpoint do
     key: "_hitbit_key",
     signing_salt: "GBLqzWxC"
 
-  plug HitBit.Plug.CORS
-  plug HitBit.Plug.AbsintheAuthContext
+  plug Hitbit.Plug.CORS
+  plug Hitbit.Plug.AbsintheAuthContext
 
-  plug HitBitWeb.Router
+  plug HitbitWeb.Router
 end

@@ -1,8 +1,8 @@
-defmodule HitBit.Repo.Migrations.InsertAdmin do
+defmodule Hitbit.Repo.Migrations.InsertAdmin do
   use Ecto.Migration
 
-  alias HitBit.Schemas.User
-  alias HitBit.Repo
+  alias Hitbit.Schemas.User
+  alias Hitbit.Repo
 
   def up do
     %User{}

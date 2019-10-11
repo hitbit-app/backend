@@ -1,7 +1,7 @@
-defmodule HitBit.Guardian do
+defmodule Hitbit.Guardian do
   use Guardian, otp_app: :hitbit
 
-  alias HitBit.Schemas.User
+  alias Hitbit.Schemas.User
 
   defp resource_to_subject(resource) do
     %{"id" => resource.id, "groups" => resource.groups}
@@ -35,7 +35,7 @@ defmodule HitBit.Guardian do
   end
 
   def resource_from_subject(%{id: user_id}) do
-    case HitBit.Repo.get(User, user_id) do
+    case Hitbit.Repo.get(User, user_id) do
       nil -> {:error, :no_such_user}
       user -> {:ok, user}
     end

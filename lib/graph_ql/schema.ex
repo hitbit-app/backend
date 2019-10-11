@@ -2,7 +2,7 @@ defmodule GraphQL.Schema do
   use Absinthe.Schema
 
   alias GraphQL.Resolvers
-  alias HitBit.Schemas.{User, Post, Comment}
+  alias Hitbit.Schemas.{User, Post, Comment}
 
   import_types(GraphQL.Types.UUID)
   import_types(GraphQL.Types.User)
@@ -25,7 +25,7 @@ defmodule GraphQL.Schema do
 
   def public_id_resolver(queryable) do
     fn %{id: id}, _resolution ->
-      case HitBit.Repo.get(queryable, id) do
+      case Hitbit.Repo.get(queryable, id) do
         nil ->
           {:error, "#{queryable} with ID #{id} not found"}
 

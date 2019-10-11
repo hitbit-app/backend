@@ -6,8 +6,8 @@ defmodule GraphQL.Types.Post do
   import Absinthe.Resolution.Helpers,
     only: [dataloader: 1, batch: 3]
 
-  alias HitBit.Repo
-  alias HitBit.Schemas.{User, Post, Comment, PostVote}
+  alias Hitbit.Repo
+  alias Hitbit.Schemas.{User, Post, Comment, PostVote}
 
   def batch_user_votes(user_id, post_ids) do
     from(v in PostVote,

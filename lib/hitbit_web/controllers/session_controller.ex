@@ -1,5 +1,5 @@
-defmodule HitBitWeb.SessionController do
-  use HitBitWeb, :controller
+defmodule HitbitWeb.SessionController do
+  use HitbitWeb, :controller
 
   defp frontend_origin do
     Application.get_env(:hitbit, __MODULE__)
@@ -8,7 +8,7 @@ defmodule HitBitWeb.SessionController do
 
   defp gql_endpoint do
     Application.get_env(:hitbit, __MODULE__, [])
-    |> Keyword.get(:gql_endpoint, HitBitWeb.Endpoint.url())
+    |> Keyword.get(:gql_endpoint, HitbitWeb.Endpoint.url())
   end
 
   def call(conn, action) when is_atom(action) do

@@ -4,10 +4,10 @@ defmodule GraphQL.Resolvers.User do
 
   import Ecto.Query
 
-  alias HitBit.Repo
-  alias HitBit.Ecto.Helper
-  alias HitBit.Schemas.{User, Post, Comment}
-  alias HitBit.Schemas.{PostVote, CommentVote}
+  alias Hitbit.Repo
+  alias Hitbit.Ecto.Helper
+  alias Hitbit.Schemas.{User, Post, Comment}
+  alias Hitbit.Schemas.{PostVote, CommentVote}
 
   defauth get_user_info(_data, %{context: ctx}) do
     case Repo.get(User, ctx.user_id) do

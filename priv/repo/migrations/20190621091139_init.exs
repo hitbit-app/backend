@@ -1,4 +1,4 @@
-defmodule HitBit.Repo.Migrations.Init do
+defmodule Hitbit.Repo.Migrations.Init do
   use Ecto.Migration
 
   def up do

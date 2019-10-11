@@ -1,9 +1,9 @@
 defmodule GraphQL.Resolvers.Public do
   import Ecto.Query
 
-  alias HitBit.Repo
-  alias HitBit.Ecto.Helper
-  alias HitBit.Schemas.{User, Post}
+  alias Hitbit.Repo
+  alias Hitbit.Ecto.Helper
+  alias Hitbit.Schemas.{User, Post}
 
   def sign_up(data, _resolution) do
     %User{}
@@ -13,7 +13,7 @@ defmodule GraphQL.Resolvers.Public do
   end
 
   def authenticate(data, _resolution) do
-    case HitBit.Auth.attempt(data) do
+    case Hitbit.Auth.attempt(data) do
       {:ok, token} -> {:ok, token}
       :error -> {:error, :unauthorized}
     end

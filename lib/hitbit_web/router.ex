@@ -1,5 +1,5 @@
-defmodule HitBitWeb.Router do
-  use HitBitWeb, :router
+defmodule HitbitWeb.Router do
+  use HitbitWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,7 +13,7 @@ defmodule HitBitWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/session-container", HitBitWeb do
+  scope "/session-container", HitbitWeb do
     pipe_through :browser
 
     get "/", SessionController, :index

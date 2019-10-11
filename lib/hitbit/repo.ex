@@ -1,4 +1,4 @@
-defmodule HitBit.Repo do
+defmodule Hitbit.Repo do
   use Ecto.Repo,
     otp_app: :hitbit,
     adapter: Ecto.Adapters.Postgres

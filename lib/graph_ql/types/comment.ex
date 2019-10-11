@@ -6,8 +6,8 @@ defmodule GraphQL.Types.Comment do
   import Absinthe.Resolution.Helpers,
     only: [dataloader: 1, batch: 3]
 
-  alias HitBit.Repo
-  alias HitBit.Schemas.{User, Comment, CommentVote}
+  alias Hitbit.Repo
+  alias Hitbit.Schemas.{User, Comment, CommentVote}
 
   def batch_user_votes(user_id, comment_ids) do
     from(v in CommentVote,

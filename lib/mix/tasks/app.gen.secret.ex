@@ -1,8 +1,8 @@
 defmodule Mix.Tasks.App.Gen.Secret do
   use Mix.Task
 
-  alias HitBit.Utils.Input
-  alias HitBit.Utils.Rand
+  alias Hitbit.Utils.Input
+  alias Hitbit.Utils.Rand
 
   defp app_name do
     Mix.Project.config()
@@ -23,6 +23,12 @@ defmodule Mix.Tasks.App.Gen.Secret do
   defp secret_key_base, do: Input.escape(Rand.string())
 
   defp guardian_secret_key, do: Input.escape(Rand.string())
+
+  defp mailgun_module, do: camel_app_name() <> ".Mailgun"
+
+  defp mailgun_api_key, do: Input.read_string("Mailgun API key")
+
+  defp mailgun_domain, do: Input.read_string("Mailgun domain")
 
   defp expose_graphiql, do: Input.ask_yN("Expose graphiql endpoint")
 
@@ -53,16 +59,19 @@ defmodule Mix.Tasks.App.Gen.Secret do
         app_name: app_name(),
         secret_key_base: secret_key_base(),
         router_module: router_module(),
+        repo_module: repo_module(),
+        mailgun_module: mailgun_module(),
         endpoint_module: endpoint_module(),
         guardian_module: guardian_module(),
         guardian_secret_key: guardian_secret_key(),
-        repo_module: repo_module(),
         expose_graphiql: expose_graphiql(),
         db_name: db_name(),
         db_user: db_user(),
         db_pass: db_pass(),
         db_host: db_host(),
-        db_port: db_port()
+        db_port: db_port(),
+        mailgun_api_key: mailgun_api_key(),
+        mailgun_domain: mailgun_domain()
       )
 
     case File.write(file_name, file_content) do

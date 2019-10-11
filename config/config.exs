@@ -1,13 +1,13 @@
 import Config
 
 config :hitbit,
-  ecto_repos: [HitBit.Repo]
+  ecto_repos: [Hitbit.Repo]
 
 # Configures the endpoint
-config :hitbit, HitBitWeb.Endpoint,
+config :hitbit, HitbitWeb.Endpoint,
   http: [port: 4000],
   url: [host: "localhost", port: 4000],
-  pubsub: [name: HitBit.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Hitbit.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -18,7 +18,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Guardian configuration
-config :hitbit, HitBit.Guardian, issuer: "hitbit"
+config :hitbit, Hitbit.Guardian, issuer: "hitbit"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

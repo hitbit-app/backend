@@ -1,8 +1,8 @@
 defmodule Mix.Tasks.App.Gen.Dotenv do
   use Mix.Task
 
-  alias HitBit.Utils.Input
-  alias HitBit.Utils.Rand
+  alias Hitbit.Utils.Input
+  alias Hitbit.Utils.Rand
 
   defp secret_key_base, do: Input.escape(Rand.string())
 

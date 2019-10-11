@@ -1,6 +1,6 @@
 defmodule Utils do
-  alias HitBit.Repo
-  alias HitBit.Schemas.{User, Post, Comment}
+  alias Hitbit.Repo
+  alias Hitbit.Schemas.{User, Post, Comment}
 
   def utc_now do
     NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)

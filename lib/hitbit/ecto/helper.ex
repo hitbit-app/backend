@@ -1,4 +1,4 @@
-defmodule HitBit.Ecto.Helper do
+defmodule Hitbit.Ecto.Helper do
   alias Ecto.Changeset
 
   def transaction_resolver({:ok, value}), do: value

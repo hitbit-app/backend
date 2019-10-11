@@ -1,4 +1,4 @@
-defmodule HitBit.Ecto.URL do
+defmodule Hitbit.Ecto.URL do
   @behaviour Ecto.Type
 
   def type, do: :string

@@ -1,4 +1,4 @@
-defmodule HitBit.MixProject do
+defmodule Hitbit.MixProject do
   use Mix.Project
 
   def project do
@@ -19,7 +19,7 @@ defmodule HitBit.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HitBit.Application, []},
+      mod: {Hitbit.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

@@ -1,4 +1,4 @@
-# HitBit [![Build Status](https://travis-ci.org/hitbit-app/backend.svg?branch=master)](https://travis-ci.org/hitbit-app/backend)
+# Hitbit [![Build Status](https://travis-ci.org/hitbit-app/backend.svg?branch=master)](https://travis-ci.org/hitbit-app/backend)
 
 ## Up and running
 

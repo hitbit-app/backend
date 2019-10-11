@@ -1,9 +1,9 @@
-defmodule HitBit.Schemas.CommentVote do
+defmodule Hitbit.Schemas.CommentVote do
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias HitBit.Schemas.{User, Comment}
+  alias Hitbit.Schemas.{User, Comment}
 
   @foreign_key_type :binary_id
 

@@ -1,4 +1,4 @@
-defmodule HitBit.Utils.Rand do
+defmodule Hitbit.Utils.Rand do
   def string(len \\ 64) do
     fn -> :crypto.strong_rand_bytes(1) end
     |> Stream.repeatedly()

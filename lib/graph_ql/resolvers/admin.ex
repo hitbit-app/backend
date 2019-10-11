@@ -4,8 +4,8 @@ defmodule GraphQL.Resolvers.Admin do
 
   import Ecto.Query
 
-  alias HitBit.Repo
-  alias HitBit.Schemas.User
+  alias Hitbit.Repo
+  alias Hitbit.Schemas.User
 
   defauth search_users(%{key: key}, _resolution) do
     search_key = "%#{key}%"

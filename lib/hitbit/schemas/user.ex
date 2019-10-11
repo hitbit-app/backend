@@ -1,9 +1,9 @@
-defmodule HitBit.Schemas.User do
+defmodule Hitbit.Schemas.User do
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias HitBit.Schemas.{Post, Comment, PostVote, CommentVote}
+  alias Hitbit.Schemas.{Post, Comment, PostVote, CommentVote}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -27,7 +27,7 @@ defmodule HitBit.Schemas.User do
     field :password_hash, :string
     field :groups, {:array, :string}, default: []
 
-    field :avatar_url, HitBit.Ecto.URL
+    field :avatar_url, Hitbit.Ecto.URL
     field :ear_points, :integer
     field :voice_points, :integer
 
@@ -40,7 +40,7 @@ defmodule HitBit.Schemas.User do
   end
 
   def changeset(%__MODULE__{} = user, %{password: pass} = attrs) do
-    hash = HitBit.Auth.hash(pass)
+    hash = Hitbit.Auth.hash(pass)
 
     attrs =
       attrs
@@ -59,7 +59,7 @@ defmodule HitBit.Schemas.User do
   end
 
   def data do
-    Dataloader.Ecto.new(HitBit.Repo, query: &query/2)
+    Dataloader.Ecto.new(Hitbit.Repo, query: &query/2)
   end
 
   def query(queryable, _params) do

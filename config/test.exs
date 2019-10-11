@@ -4,8 +4,8 @@ Code.require_file("rand.ex", "lib/hitbit/utils")
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :hitbit, HitBitWeb.Endpoint,
-  secret_key_base: HitBit.Utils.Rand.string(),
+config :hitbit, HitbitWeb.Endpoint,
+  secret_key_base: Hitbit.Utils.Rand.string(),
   http: [port: 4002],
   server: false
 
@@ -13,7 +13,7 @@ config :hitbit, HitBitWeb.Endpoint,
 config :logger, level: :warn
 
 # Database configuration
-config :hitbit, HitBit.Repo,
+config :hitbit, Hitbit.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   database: System.get_env("DB_NAME", "postgres"),
   username: System.get_env("DB_USER", "postgres"),
@@ -23,4 +23,4 @@ config :hitbit, HitBit.Repo,
   pool_size: 15
 
 # Guardian configuration
-config :hitbit, HitBit.Guardian, secret_key: HitBit.Utils.Rand.string()
+config :hitbit, Hitbit.Guardian, secret_key: Hitbit.Utils.Rand.string()

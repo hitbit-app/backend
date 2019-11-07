@@ -38,16 +38,21 @@ defmodule HitbitWeb.ConnCase do
       end
 
       defp auth(conn, user) do
-        %{"data" => %{"login" => token}} =
+        %{"data" => %{"login" => tokens}} =
           gql conn,
               """
               mutation {
                 login(
                   email: "#{user.email}"
                   password: "#{user.password}"
-                )
+                ) {
+                  accessToken
+                  refreshToken
+                }
               }
               """
+
+        %{"accessToken" => token} = tokens
 
         put_req_header(conn, "authorization", "Bearer #{token}")
       end

@@ -12,9 +12,16 @@ defmodule GraphQL.Resolvers.Public do
     |> Helper.id_resolver()
   end
 
-  def authenticate(data, _resolution) do
-    case Hitbit.Auth.attempt(data) do
-      {:ok, token} -> {:ok, token}
+  def login(data, _resolution) do
+    case Hitbit.Auth.login(data) do
+      {:ok, auth} -> {:ok, auth}
+      :error -> {:error, :unauthorized}
+    end
+  end
+
+  def refresh(%{token: token}, _resolution) do
+    case Hitbit.Auth.refresh(token) do
+      {:ok, auth} -> {:ok, auth}
       :error -> {:error, :unauthorized}
     end
   end

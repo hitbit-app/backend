@@ -35,6 +35,12 @@ defmodule GraphQL.Schema do
     end
   end
 
+  @desc "Access token is always returned, while refresh token isn't renewed everytime"
+  object :auth_tokens do
+    field :access_token, non_null(:string)
+    field :refresh_token, :string
+  end
+
   @desc "A vote can be an upvote (UP) or a downvote (DOWN)"
   enum :vote do
     value(:up)
@@ -65,11 +71,18 @@ defmodule GraphQL.Schema do
     end
 
     @desc "public: Gives a token for bearer authentication"
-    field :login, :string do
+    field :login, :auth_tokens do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
-      resolve(&Resolvers.Public.authenticate/2)
+      resolve(&Resolvers.Public.login/2)
+    end
+
+    @desc "public: Renews the user session - gives back a new access token and optionally a refresh token"
+    field :refresh, :auth_tokens do
+      arg(:token, non_null(:string))
+
+      resolve(&Resolvers.Public.refresh/2)
     end
 
     @desc "user: Edits user info"

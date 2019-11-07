@@ -13,8 +13,8 @@ defmodule Hitbit.Plug.AbsintheAuthContext do
 
   def build_context(conn) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-         {:ok, sub} <- Hitbit.Guardian.subject_from_token(token) do
-      %{user_id: sub.id, user_groups: sub.groups}
+         {:ok, resource} <- Hitbit.Auth.decode_access_token(token) do
+      %{user_id: resource.id, user_groups: resource.groups}
     else
       _ -> %{}
     end

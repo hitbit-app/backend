@@ -67,7 +67,10 @@ defmodule GraphQL.PublicTest do
       login(
         email: "#{data.email}",
         password: "#{data.password}"
-      )
+      ) {
+        accessToken
+        refreshToken
+      }
     }
     """
   end
@@ -85,7 +88,8 @@ defmodule GraphQL.PublicTest do
               password: user.password
             })
 
-      assert is_binary(data["login"])
+      assert is_binary(data["login"]["accessToken"])
+      assert is_binary(data["login"]["refreshToken"])
     end
 
     test "empty password", %{conn: conn, user: user} do

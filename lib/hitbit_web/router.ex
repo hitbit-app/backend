@@ -13,6 +13,13 @@ defmodule HitbitWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/auth", HitbitWeb do
+    pipe_through :api
+
+    post "/login", AuthController, :login
+    get "/refresh", AuthController, :refresh
+  end
+
   scope "/session-container", HitbitWeb do
     pipe_through :browser
 

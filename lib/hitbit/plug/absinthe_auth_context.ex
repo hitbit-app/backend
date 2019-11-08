@@ -1,7 +1,7 @@
 defmodule Hitbit.Plug.AbsintheAuthContext do
   @behaviour Plug
 
-  import Plug.Conn
+  alias Hitbit.Auth
 
   def init(opts), do: opts
 
@@ -12,8 +12,8 @@ defmodule Hitbit.Plug.AbsintheAuthContext do
   end
 
   def build_context(conn) do
-    with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-         {:ok, resource} <- Hitbit.Auth.decode_access_token(token) do
+    with {:ok, token} <- Auth.get_header_token(conn),
+         {:ok, resource} <- Auth.decode_access_token(token) do
       %{user_id: resource.id, user_groups: resource.groups}
     else
       _ -> %{}

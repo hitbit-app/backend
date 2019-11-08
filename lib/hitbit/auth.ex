@@ -11,6 +11,16 @@ defmodule Hitbit.Auth do
 
   def verify(pass, hash), do: Argon2.verify_pass(pass, hash)
 
+  def get_header_token(%Plug.Conn{} = conn) do
+    case Plug.Conn.get_req_header(conn, "authorization") do
+      ["Bearer " <> token] ->
+        {:ok, token}
+
+      _ ->
+        :error
+    end
+  end
+
   defp issue_token(resource, opts) do
     resource
     |> Guardian.encode_and_sign(%{}, opts)
@@ -57,7 +67,7 @@ defmodule Hitbit.Auth do
     token_life = Guardian.ttl_to_seconds(@issue_new_refresh_token_after)
     now = System.system_time(:second)
 
-    if issued_at + token_life >= now do
+    if now > issued_at + token_life do
       {:ok, _} = Guardian.revoke(old_token)
       issue_refresh_token(user)
     else
@@ -79,11 +89,7 @@ defmodule Hitbit.Auth do
            access_token: access_token,
            refresh_token: refresh_token
          } do
-      if is_nil(refresh_token) do
-        {:ok, Map.delete(tokens, :refresh_token)}
-      else
-        {:ok, tokens}
-      end
+      {:ok, tokens}
     else
       _ -> :error
     end

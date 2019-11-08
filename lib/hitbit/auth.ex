@@ -94,4 +94,14 @@ defmodule Hitbit.Auth do
       _ -> :error
     end
   end
+
+  def revoke(token) do
+    with {:ok, claims} <- Guardian.decode_and_verify(token),
+         %{"typ" => "refresh"} <- claims,
+         {:ok, _} <- Guardian.revoke(token) do
+      :ok
+    else
+      _ -> :error
+    end
+  end
 end

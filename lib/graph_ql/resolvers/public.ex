@@ -2,6 +2,7 @@ defmodule GraphQL.Resolvers.Public do
   import Ecto.Query
 
   alias Hitbit.Repo
+  alias Hitbit.Auth
   alias Hitbit.Ecto.Helper
   alias Hitbit.Schemas.{User, Post}
 
@@ -13,16 +14,32 @@ defmodule GraphQL.Resolvers.Public do
   end
 
   def login(data, _resolution) do
-    case Hitbit.Auth.login(data) do
-      {:ok, auth} -> {:ok, auth}
-      :error -> {:error, :unauthorized}
+    case Auth.login(data) do
+      {:ok, auth} ->
+        {:ok, auth}
+
+      :error ->
+        {:error, :unauthorized}
     end
   end
 
   def refresh(%{token: token}, _resolution) do
-    case Hitbit.Auth.refresh(token) do
-      {:ok, auth} -> {:ok, auth}
-      :error -> {:error, :unauthorized}
+    case Auth.refresh(token) do
+      {:ok, auth} ->
+        {:ok, auth}
+
+      :error ->
+        {:error, :unauthorized}
+    end
+  end
+
+  def logout(%{token: token}, _resolution) do
+    case Auth.revoke(token) do
+      :ok ->
+        {:ok, true}
+
+      :error ->
+        {:error, :unauthorized}
     end
   end
 

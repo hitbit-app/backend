@@ -85,6 +85,13 @@ defmodule GraphQL.Schema do
       resolve(&Resolvers.Public.refresh/2)
     end
 
+    @desc "public: Revoke the refresh token"
+    field :logout, :boolean do
+      arg(:token, non_null(:string))
+
+      resolve(&Resolvers.Public.logout/2)
+    end
+
     @desc "user: Edits user info"
     field :edit_user, :boolean do
       arg(:username, type: :string)

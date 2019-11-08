@@ -18,6 +18,7 @@ defmodule HitbitWeb.Router do
 
     post "/login", AuthController, :login
     get "/refresh", AuthController, :refresh
+    get "/logout", AuthController, :logout
   end
 
   scope "/session-container", HitbitWeb do

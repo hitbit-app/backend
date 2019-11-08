@@ -9,9 +9,9 @@ alias Hitbit.Schemas.{User, Post, Comment, PostVote, CommentVote}
 require Logger
 
 users = 20
-posts_per_user = 8
-comments_per_post = 4
-replies_per_comment = 3
+posts_per_user = 3
+comments_per_post = 2
+replies_per_comment = 2
 
 post_votes_per_user = 100
 comment_votes_per_user = 100

@@ -26,4 +26,13 @@ defmodule HitbitWeb.AuthController do
       _ -> unauthorized(conn)
     end
   end
+
+  def logout(conn, _params) do
+    with {:ok, token} <- Auth.get_header_token(conn),
+         :ok <- Auth.revoke(token) do
+      put_status(conn, 200)
+    else
+      _ -> unauthorized(conn)
+    end
+  end
 end

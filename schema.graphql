@@ -1,124 +1,120 @@
-# source: http://localhost:4000
-# timestamp: Fri Oct 11 2019 22:32:08 GMT+0200 (GMT+02:00)
-
 schema {
   query: RootQueryType
   mutation: RootMutationType
 }
 
-type Comment {
-  author: User
-  id: UUID!
-  replies: [Reply]
-  text: String!
-  userVote: Vote
-  votes: UpDownVotes
-}
-
-type Post {
-  answer: Comment
-  audioUrl: String!
-  author: User
-  comments: [Comment]
-  id: UUID!
-  insertedAt: String!
-  userVote: Vote
-  votes: UpDownVotes
-}
-
 type Reply {
-  author: User
   id: UUID!
   text: String!
   userVote: Vote
+  author: User
   votes: UpDownVotes
-}
-
-type RootMutationType {
-  """user: Labels a comment as answer"""
-  acceptAnswer(commentId: UUID!): Boolean
-
-  """user: Edits a post"""
-  editPost(audioUrl: String, id: UUID!): Boolean
-
-  """user: Edits user info"""
-  editUser(avatarUrl: String, email: String, username: String): Boolean
-
-  """user: Creates new comment"""
-  insertComment(postId: UUID!, text: String!): UUID
-
-  """user: Creates new post"""
-  insertPost(audioUrl: String!): UUID
-
-  """user: Creates new comment to comment"""
-  insertReply(commentId: UUID!, text: String!): UUID
-
-  """public: Gives a token for bearer authentication"""
-  login(email: String!, password: String!): String
-
-  """user: Removes a post"""
-  removePost(id: UUID!): Boolean
-
-  """public: Creates new user"""
-  signUp(email: String!, password: String!, username: String!): UUID
-
-  """user: Upvote/downvote or remove vote from a comment"""
-  voteComment(commentId: UUID!, mode: VoteMode!): Boolean
-
-  """user: Upvote/downvote or remove vote from a post"""
-  votePost(mode: VoteMode!, postId: UUID!): Boolean
-}
-
-type RootQueryType {
-  """public: UUID to comment"""
-  comment(id: UUID!): Comment
-
-  """public: Latest inserted posts (not just current user's)"""
-  latestPosts(limit: Int = 15): [Post]
-
-  """public: UUID to post"""
-  post(id: UUID!): Post
-
-  """admin: The given key is a substring of username or email"""
-  searchUsers(key: String!): [User]
-
-  """user: Gives back the authenticated user"""
-  userInfo: User
-}
-
-"""How many upvotes and downvotes has an item"""
-type UpDownVotes {
-  down: Int
-  up: Int
-}
-
-type User {
-  avatarUrl: String
-  earPoints: Int!
-  email: String!
-  id: UUID!
-  posts: [Post]
-  username: String!
-  voicePoints: Int!
 }
 
 """
 String representation as specified in RFC 4122.
 
 E.g.: "f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
-
 """
 scalar UUID
 
-"""A vote can be an upvote (UP) or a downvote (DOWN)"""
-enum Vote {
-  DOWN
-  UP
+type Comment {
+  id: UUID!
+  text: String!
+  userVote: Vote
+  author: User
+  replies: [Reply]
+  votes: UpDownVotes
 }
 
-"""Vote mode: upvote, downvote or remove a vote from an item"""
+"A vote can be an upvote (UP) or a downvote (DOWN)"
+enum Vote {
+  UP
+  DOWN
+}
+
+type Post {
+  id: UUID!
+  audioUrl: String!
+  insertedAt: String!
+  userVote: Vote
+  author: User
+  answer: Comment
+  comments: [Comment]
+  votes: UpDownVotes
+}
+
+type RootMutationType {
+  "public: Creates new user"
+  signUp(username: String!, email: String!, password: String!): UUID
+
+  "public: Gives a token for bearer authentication"
+  login(email: String!, password: String!): String
+
+  "user: Edits user info"
+  editUser(username: String, email: String, avatarUrl: String): Boolean
+
+  "user: Creates new post"
+  insertPost(audioUrl: String!): UUID
+
+  "user: Edits a post"
+  editPost(id: UUID!, audioUrl: String): Boolean
+
+  "user: Removes a post"
+  removePost(id: UUID!): Boolean
+
+  "user: Creates new comment"
+  insertComment(text: String!, postId: UUID!): UUID
+
+  "user: Creates new comment to comment"
+  insertReply(text: String!, commentId: UUID!): UUID
+
+  "user: Labels a comment as answer"
+  acceptAnswer(commentId: UUID!): Boolean
+
+  "user: Upvote/downvote or remove vote from a post"
+  votePost(mode: VoteMode!, postId: UUID!): Boolean
+
+  "user: Upvote/downvote or remove vote from a comment"
+  voteComment(mode: VoteMode!, commentId: UUID!): Boolean
+}
+
+type RootQueryType {
+  "public: UUID to post"
+  post(id: UUID!): Post
+
+  "public: UUID to comment"
+  comment(id: UUID!): Comment
+
+  "public: Latest inserted posts (not just current user's)"
+  latestPosts(limit: Int): [Post]
+
+  "user: Gives back the authenticated user"
+  userInfo: User
+
+  "admin: The given key is a substring of username or email"
+  searchUsers(key: String!): [User]
+}
+
+"Vote mode: upvote, downvote or remove a vote from an item"
 enum VoteMode {
+  UP
   DOWN
   REMOVE
-  UP
+}
+
+"How many upvotes and downvotes has an item"
+type UpDownVotes {
+  up: Int
+  down: Int
+}
+
+type User {
+  id: UUID!
+  username: String!
+  email: String!
+  avatarUrl: String
+  earPoints: Int!
+  voicePoints: Int!
+  posts: [Post]
 }

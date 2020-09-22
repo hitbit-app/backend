@@ -26,7 +26,7 @@ config :logger, level: :info
 
 # Session controller configuration
 config :hitbit, HitbitWeb.SessionController,
-  frontend_origin: "https://hitbit-secure-localstorage.netlify.com",
+  frontend_origin: "https://hitbit-secure-localstorage.netlify.app",
   gql_endpoint: "https://hitbit-app.herokuapp.com"
 
 # ## SSL Support

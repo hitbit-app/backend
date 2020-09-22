@@ -16,6 +16,7 @@ defmodule HitbitWeb.SessionController do
       conn
       |> put_resp_header("content-type", "text/html")
       |> put_resp_header("x-frame-options", "allow-from #{frontend_origin()}")
+      |> put_resp_header("content-security-policy", "frame-ancestors #{frontend_origin()}")
 
     apply(__MODULE__, action, [conn, conn.params])
   end

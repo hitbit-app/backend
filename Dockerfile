@@ -3,7 +3,7 @@ ARG APP_NAME=hitbit
 ARG MIX_HOME=/opt/mix
 ARG HEX_HOME=/opt/hex
 
-FROM elixir:1.9-alpine AS base
+FROM elixir:1.10-alpine AS base
 ARG MIX_ENV
 ARG MIX_HOME
 ARG HEX_HOME
@@ -44,7 +44,7 @@ ARG HEX_HOME
 
 RUN mix phx.digest && mix release
 
-FROM alpine:3.9 AS deploy
+FROM alpine:3.12 AS prod
 ARG MIX_ENV=prod
 ARG APP_NAME
 

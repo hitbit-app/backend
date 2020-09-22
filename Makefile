@@ -50,12 +50,8 @@ test: docker-build-test
 	$(test-docker-compose) $(start-phoenix)
 
 .PHONY: schema.graphql
-schema.graphql: docker-build-dev
-	$(dev-docker-compose) up -d
-	# If doesn't work download [graphql-cli](https://github.com/graphql-cli/graphql-cli)
-	while [ `curl -o /dev/null -s -w "%{http_code}\n" http://localhost:4000` -eq 0 ]; do sleep 1; done
-	graphql get-schema
-	$(dev-docker-compose) stop
+schema.graphql:
+	mix absinthe.schema.sdl --schema GraphQL.Schema
 
 .PHONY: travis-test
 travis-test: docker-build-cached-test
@@ -63,5 +59,6 @@ travis-test: docker-build-cached-test
 
 .PHONY: heroku-release
 heroku-release: config/prod.secret.exs
+	heroku container:login
 	heroku container:push web --arg MIX_ENV=prod -a hitbit-app
 	heroku container:release web -a hitbit-app
